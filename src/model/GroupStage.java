@@ -61,10 +61,12 @@ public class GroupStage {
         // Generar partidos de todos contra todos en el grupo
         for (int i = 0; i < group.length; i++) {
             for (int j = i + 1; j < group.length; j++) {
-                matches[matchIndex] = group[i].getName() + " vs " + group[j].getName();
-                dates[matchIndex] = "Date for match " + (matchIndex + 1);  // Se puede personalizar la fecha si se desea
-                result += matches[matchIndex] + " on " + dates[matchIndex] + "\n";
-                matchIndex++;
+                if(group[i] != null && group[j] != null) {
+                    matches[matchIndex] = group[i].getName() + " vs " + group[j].getName();
+                    dates[matchIndex] = "Date for match " + (matchIndex + 1);  // Se puede personalizar la fecha si se desea
+                    result += matches[matchIndex] + " on " + dates[matchIndex] + "\n";
+                    matchIndex++;
+                }
             }
         }
 

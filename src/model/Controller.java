@@ -365,8 +365,25 @@ public class Controller {
         return "Data preloaded successfully.";
     }
 
+    public boolean verifyArrayTeams() {
+
+        int countNull = 0;
+        for(int i = 0; i < teams.length; i++) {
+            if(teams[i] == null) {
+                countNull++;
+            }
+        }
+        if(countNull > 0) {
+            return false;
+        }
+        return true;
+    }
+
     public String generateGroupStage() {
-        groupStage.setTeams(teams);
-        return groupStage.createMatches();
+        if(verifyArrayTeams()) {
+            groupStage.setTeams(teams);
+            return groupStage.createMatches();
+        }
+        return "Please register all 8 teams in order to start the tournament";
     }
 }

@@ -51,7 +51,7 @@ public class Executable {
                     showGroupStageDraw();
                     break;
                 case 6:
-                    assignRefereeToMatch();
+                    assignRefereesToGroup();
                     break;
                 case 7:
                     flag = true;
@@ -142,21 +142,22 @@ public class Executable {
         System.out.println(cont.generateGroupStage());
     }
 
-    public void assignRefereeToMatch() {
-        System.out.println("Enter match number (0-11): ");
-        int matchIndex = reader.nextInt();
-        reader.nextLine();
-        System.out.println("Enter home team country: ");
-        String homeTeam = reader.nextLine();
-        System.out.println("Enter away team country: ");
-        String awayTeam = reader.nextLine();
-
-        System.out.println(cont.assignRefereeTeam(matchIndex, homeTeam, awayTeam));
-    }
-
     // Main method
     public static void main(String[] args) {
         Executable mainApp = new Executable();
         mainApp.run(flag);
+    }
+
+    // Método para asignar árbitros a un grupo
+    public void assignRefereesToGroup() {
+        System.out.print("Enter group (A or B): ");
+        String group = reader.nextLine().toUpperCase();
+
+        while (!group.equals("A") && !group.equals("B")) {
+            System.out.println("Invalid group. Please try again.");
+            group = reader.nextLine().toUpperCase();
+        }
+
+        System.out.println(cont.assignRefereesToGroup(group));
     }
 }

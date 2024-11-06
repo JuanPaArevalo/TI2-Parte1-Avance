@@ -388,42 +388,19 @@ public class Controller {
         return "Please register all 8 teams in order to start the tournament";
     }
 
-    /**
-     * Asigna un equipo arbitral a un partido en función de su disponibilidad y nacionalidad.
-     * @param matchIndex Índice del partido al que se asignarán los árbitros
-     * @param homeTeam País del equipo local para evitar árbitros del mismo país.
-     * @param awayTeam País del equipo visitante para evitar árbitros del mismo país.
-     * @return String mensaje de éxito o de error si no se pudieron asignar los árbitros.
-     */
-    public String assignRefereeTeam(int matchIndex, String homeTeam, String awayTeam) {
-        Referee central = null;
-        Referee assistant1 = null;
-        Referee assistant2 = null;
+    public String assignRefereesToGroup(String group) {
+        String message = "Asignación de árbitros para el grupo " + group + ": ";
 
-        // Buscar árbitros disponibles que no sean de los países de los equipos
-        for (Referee ref : referees) {
-            if (ref != null && !ref.getCountry().equalsIgnoreCase(homeTeam) && !ref.getCountry().equalsIgnoreCase(awayTeam)) {
-                if (ref.getrefType() == RefereeType.CENTRAL && central == null) {
-                    central = ref;
-                } else if (ref.getrefType() == RefereeType.ASSISTANT) {
-                    if (assistant1 == null) {
-                        assistant1 = ref;
-                    } else if (assistant2 == null) {
-                        assistant2 = ref;
-                    }
-                }
+        // Filtrar árbitros por nacionalidad y tipo
+        String[] assignedReferees = groupStage.assignReferees(teams, referees, group);
+        if (assignedReferees != null) {
+            for (String referee : assignedReferees) {
+                message += "\n" + referee;
             }
-            if (central != null && assistant1 != null && assistant2 != null) {
-                break;
-            }
+            return message;
         }
 
-        // Verificar que todos los árbitros requeridos fueron asignados
-        if (central != null && assistant1 != null && assistant2 != null) {
-            return groupStage.assignRefereeToMatch(matchIndex, central, assistant1, assistant2);
-        } else {
-            return "No se encontraron árbitros disponibles para este partido.";
-        }
+        return "No hay árbitros disponibles para el grupo " + group;
     }
 
 }

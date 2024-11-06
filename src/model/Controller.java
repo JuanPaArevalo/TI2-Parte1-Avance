@@ -343,7 +343,7 @@ public class Controller {
         registerPlayer(team8, 19, "Folarin Balogun", "Estados Unidos", PlayerPosition.FORWARD);
         registerPlayer(team8, 20, "Kevin Volland", "Alemania", PlayerPosition.FORWARD);
 
-        registerReferee(createReferee(54309, "Gil Manzano", "Espana", RefereeType.CENTRAL));
+        registerReferee(createReferee(54309, "Gil Manzano", "Egipto", RefereeType.CENTRAL));
         
         Referee referee2 = createReferee(98427, "Juan Joe", "Canada", RefereeType.ASSISTANT);
         registerReferee(referee2);
@@ -355,9 +355,9 @@ public class Controller {
         registerReferee(referee5);
         Referee referee6 = createReferee(28162, "Edwar Estacio", "Brasil", RefereeType.ASSISTANT);
         registerReferee(referee6);
-        Referee referee7 = createReferee(98251, "Jacobo Rodriguez", "Inglaterra", RefereeType.ASSISTANT);
+        Referee referee7 = createReferee(98251, "Jacobo Rodriguez", "Alemania", RefereeType.ASSISTANT);
         registerReferee(referee7);
-        Referee referee8 = createReferee(62819, "Felipe Cabrera", "Colombia", RefereeType.ASSISTANT);
+        Referee referee8 = createReferee(62819, "Felipe Cabrera", "Nicaragua", RefereeType.ASSISTANT);
         registerReferee(referee8);
         Referee referee9 = createReferee(728392, "Felipe Gonzalez", "Mexico", RefereeType.ASSISTANT);
         registerReferee(referee9);
@@ -365,7 +365,7 @@ public class Controller {
         registerReferee(referee10);
         Referee referee11 = createReferee(72832, "Sebastian Acosta", "Chile", RefereeType.CENTRAL);
         registerReferee(referee11);
-        Referee referee12 = createReferee(54823, "Sebastian Hidalgo", "Colombia", RefereeType.CENTRAL);
+        Referee referee12 = createReferee(54823, "Sebastian Hidalgo", "Paraguay", RefereeType.CENTRAL);
         registerReferee(referee12);
 
 
@@ -470,7 +470,7 @@ public class Controller {
             referees[j] = temp;
         }
     }
-    
+
     public String registerMatchScores() {
     return groupStage.registerMatchScores();  // Delegate to GroupStage to handle match score registration
 }

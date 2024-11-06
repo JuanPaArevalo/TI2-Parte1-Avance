@@ -19,7 +19,7 @@ public class Referee extends Person implements IWaterDrinker {
         this.id = id;
     }
 
-    public RefereeType getrefType() {
+    public RefereeType getRefType() {
         return refType;
     }
 

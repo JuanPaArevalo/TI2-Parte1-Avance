@@ -28,8 +28,9 @@ public class Executable {
                                 + "3. Register referee \n" 
                                 + "4. Preload data \n"
                                 + "5. Show group stage draw \n"
-                                + "6. Assing referees to match \n" 
-                                + "7. Exit \n");
+                                + "6. Assign referees to match \n" 
+                                + "7. Register match scores \n" 
+                                + "8. Exit \n");
 
             int option = reader.nextInt();
             reader.nextLine(); // Clear buffer
@@ -54,6 +55,9 @@ public class Executable {
                     assignRefereesToGroup();
                     break;
                 case 7:
+                    System.out.println(cont.registerMatchScores());
+                    break;
+                case 8:
                     flag = true;
                     System.exit(0);
                     break;

@@ -5,6 +5,12 @@ import model.Player;
 import model.Referee;
 import model.PlayerPosition;
 import model.RefereeType;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import model.GroupStage;
 
 public class Controller {
@@ -337,8 +343,8 @@ public class Controller {
         registerPlayer(team8, 19, "Folarin Balogun", "Estados Unidos", PlayerPosition.FORWARD);
         registerPlayer(team8, 20, "Kevin Volland", "Alemania", PlayerPosition.FORWARD);
 
-        Referee referee1 = createReferee(54309, "Gil Manzano", "Espana", RefereeType.CENTRAL);
-        registerReferee(referee1);
+        registerReferee(createReferee(54309, "Gil Manzano", "Espana", RefereeType.CENTRAL));
+        
         Referee referee2 = createReferee(98427, "Juan Joe", "Canada", RefereeType.ASSISTANT);
         registerReferee(referee2);
         Referee referee3 = createReferee(82615, "Tomás Jaramillo", "Colombia", RefereeType.ASSISTANT);
@@ -390,17 +396,85 @@ public class Controller {
 
     public String assignRefereesToGroup(String group) {
         String message = "Asignación de árbitros para el grupo " + group + ": ";
-
-        // Filtrar árbitros por nacionalidad y tipo
-        String[] assignedReferees = groupStage.assignReferees(teams, referees, group);
-        if (assignedReferees != null) {
-            for (String referee : assignedReferees) {
-                message += "\n" + referee;
+    
+        // Loop over all matches in the group
+        for (int matchIndex = 0; matchIndex < 6; matchIndex++) {
+            // Shuffle the referees before each match assignment
+            shuffleReferees(referees);
+    
+            // Filter and assign referees (1 central and 2 assistants) for the match
+            String[] assignedReferees = assignReferees(referees, group);
+    
+            // Check if referees are assigned and build the message for each match
+            if (assignedReferees != null) {
+                message += "\nMatch " + (matchIndex + 1) + " referees: ";
+                for (String referee : assignedReferees) {
+                    message += "\n" + referee;
+                }
+            } else {
+                message += "\nNo referees available for match " + (matchIndex + 1);
             }
-            return message;
         }
-
-        return "No hay árbitros disponibles para el grupo " + group;
+    
+        return message;
     }
+
+    public String[] assignReferees(Referee[] referees, String group) {
+    // Separate central and assistant referees
+    List<Referee> centralReferees = new ArrayList<>();
+    List<Referee> assistantReferees = new ArrayList<>();
+
+    // Split referees by type
+    for (Referee referee : referees) {
+        if (referee != null) {
+            if (referee.getRefType() == RefereeType.CENTRAL) {
+                centralReferees.add(referee);
+            } else if (referee.getRefType() == RefereeType.ASSISTANT) {
+                assistantReferees.add(referee);
+            }
+        }
+    }
+
+    // Ensure we have at least one central and two assistants
+    if (centralReferees.size() > 0 && assistantReferees.size() > 1) {
+        // Randomly shuffle both lists
+        Collections.shuffle(centralReferees);
+        Collections.shuffle(assistantReferees);
+
+        // Select one central referee and two assistant referees
+        Referee centralReferee = centralReferees.get(0);
+        Referee assistantReferee1 = assistantReferees.get(0);
+        Referee assistantReferee2 = assistantReferees.get(1);
+
+        // Return the assigned referees as a formatted string array
+        return new String[]{
+            centralReferee.getName() + " (" + centralReferee.getCountry() + ") - Central",
+            assistantReferee1.getName() + " (" + assistantReferee1.getCountry() + ") - Assistant",
+            assistantReferee2.getName() + " (" + assistantReferee2.getCountry() + ") - Assistant"
+        };
+    }
+
+    return null; // If we don't have enough referees, return null
+}
+
+    
+    
+
+    // Shuffle referees method using Random
+    private void shuffleReferees(Referee[] referees) {
+        Random rand = new Random();
+        for (int i = referees.length - 1; i > 0; i--) {
+            int j = rand.nextInt(i + 1);
+            Referee temp = referees[i];
+            referees[i] = referees[j];
+            referees[j] = temp;
+        }
+    }
+    
+    public String registerMatchScores() {
+    return groupStage.registerMatchScores();  // Delegate to GroupStage to handle match score registration
+}
+
+
 
 }

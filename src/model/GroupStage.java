@@ -5,13 +5,13 @@ import java.util.Random;
 public class GroupStage {
     private Team[] groupA;
     private Team[] groupB;
-    private String[] matches;
+    private Match[] matches;  // Array of Match objects instead of String[] for better data handling
     private String[] dates;
 
     public GroupStage() {
         this.groupA = new Team[4];
         this.groupB = new Team[4];
-        this.matches = new String[12]; // 6 matches per group for a total of 12 matches
+        this.matches = new Match[12]; // 6 matches per group for a total of 12 matches
         this.dates = new String[12];
     }
 
@@ -48,9 +48,12 @@ public class GroupStage {
         result += "\nGroup A Matches:\n";
         for (int i = 0; i < groupA.length; i++) {
             for (int j = i + 1; j < groupA.length; j++) {
-                matches[matchIndex] = groupA[i].getName() + " vs " + groupA[j].getName();
+                // Create match instance with teams and assign referees
+                Match match = new Match(groupA[i], groupA[j]);
+                matches[matchIndex] = match;
                 dates[matchIndex] = "Date for match " + (matchIndex + 1);
-                result += matches[matchIndex] + " on " + dates[matchIndex] + "\n";
+                result += match.getHomeTeam().getName() + " vs " + match.getAwayTeam().getName() +
+                        " on " + dates[matchIndex] + "\n";
                 matchIndex++;
             }
         }
@@ -59,9 +62,12 @@ public class GroupStage {
         result += "\nGroup B Matches:\n";
         for (int i = 0; i < groupB.length; i++) {
             for (int j = i + 1; j < groupB.length; j++) {
-                matches[matchIndex] = groupB[i].getName() + " vs " + groupB[j].getName();
+                // Create match instance with teams and assign referees
+                Match match = new Match(groupB[i], groupB[j]);
+                matches[matchIndex] = match;
                 dates[matchIndex] = "Date for match " + (matchIndex + 1);
-                result += matches[matchIndex] + " on " + dates[matchIndex] + "\n";
+                result += match.getHomeTeam().getName() + " vs " + match.getAwayTeam().getName() +
+                        " on " + dates[matchIndex] + "\n";
                 matchIndex++;
             }
         }
@@ -81,7 +87,12 @@ public class GroupStage {
                     if (teams[j] != null && !teams[j].getCountry().equals(referees[i].getCountry())) {
                         // Evitar asignar árbitros del mismo país que el equipo
                         if (index < 6) {
-                            assignedReferees[index++] = referees[i].getName() + " (" + referees[i].getCountry() + ")";
+                            // Assuming central referees first, followed by assistant referees
+                            if (referees[i].getRefType() == RefereeType.CENTRAL) {
+                                assignedReferees[index++] = referees[i].getName() + " (Central)";
+                            } else {
+                                assignedReferees[index++] = referees[i].getName() + " (Assistant)";
+                            }
                         }
                     }
                 }
@@ -89,5 +100,31 @@ public class GroupStage {
         }
 
         return assignedReferees;
+    }
+
+    // Method to register match scores
+    public String registerMatchScores() {
+        StringBuilder result = new StringBuilder("Match Scores:\n");
+
+        // Generate random scores or get from input
+        Random random = new Random();
+        for (int i = 0; i < matches.length; i++) {
+            Match match = matches[i];
+            int homeScore = random.nextInt(5);  // Random score between 0-4
+            int awayScore = random.nextInt(5);  // Random score between 0-4
+            match.setHomeScore(homeScore);
+            match.setAwayScore(awayScore);
+
+            result.append(match.getHomeTeam().getName())
+                  .append(" vs ")
+                  .append(match.getAwayTeam().getName())
+                  .append(": ")
+                  .append(homeScore)
+                  .append(" - ")
+                  .append(awayScore)
+                  .append("\n");
+        }
+
+        return result.toString();
     }
 }

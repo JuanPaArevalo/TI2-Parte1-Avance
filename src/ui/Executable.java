@@ -27,8 +27,9 @@ public class Executable {
                                 + "2. Register player \n"
                                 + "3. Register referee \n" 
                                 + "4. Preload data \n"
-                                + "5. Show group stage draw \n" 
-                                + "6. Exit \n");
+                                + "5. Show group stage draw \n"
+                                + "6. Assing referees to match \n" 
+                                + "7. Exit \n");
 
             int option = reader.nextInt();
             reader.nextLine(); // Clear buffer
@@ -50,6 +51,9 @@ public class Executable {
                     showGroupStageDraw();
                     break;
                 case 6:
+                    assignRefereeToMatch();
+                    break;
+                case 7:
                     flag = true;
                     System.exit(0);
                     break;
@@ -136,6 +140,18 @@ public class Executable {
     //Method to show the group stage fixture
     public void showGroupStageDraw() {
         System.out.println(cont.generateGroupStage());
+    }
+
+    public void assignRefereeToMatch() {
+        System.out.println("Enter match number (0-11): ");
+        int matchIndex = reader.nextInt();
+        reader.nextLine();
+        System.out.println("Enter home team country: ");
+        String homeTeam = reader.nextLine();
+        System.out.println("Enter away team country: ");
+        String awayTeam = reader.nextLine();
+
+        System.out.println(cont.assignRefereeTeam(matchIndex, homeTeam, awayTeam));
     }
 
     // Main method

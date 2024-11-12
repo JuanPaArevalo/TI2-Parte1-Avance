@@ -5,7 +5,6 @@ import model.Player;
 import model.Referee;
 import model.PlayerPosition;
 import model.RefereeType;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -395,7 +394,7 @@ public class Controller {
     }
 
     public String assignRefereesToGroup(String group) {
-        String message = "Asignación de árbitros para el grupo " + group + ": ";
+        String message = "Assignment of referees for the group " + group + ": ";
     
         // Loop over all matches in the group
         for (int matchIndex = 0; matchIndex < 6; matchIndex++) {

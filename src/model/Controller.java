@@ -5,6 +5,7 @@ import model.Player;
 import model.Referee;
 import model.PlayerPosition;
 import model.RefereeType;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -371,6 +372,10 @@ public class Controller {
         return "Data preloaded successfully.";
     }
 
+    /**
+     * Description: Checks if all team slots are filled in the teams array.
+     * @return boolean, returns true if all team slots are filled, otherwise false.
+     */
     public boolean verifyArrayTeams() {
 
         int countNull = 0;
@@ -385,6 +390,10 @@ public class Controller {
         return true;
     }
 
+    /**
+     * Description: Generates group stage matches if all teams are registered.
+     * @return String, returns message indicating either success in match generation or requirement to register more teams.
+     */
     public String generateGroupStage() {
         if(verifyArrayTeams()) {
             groupStage.setTeams(teams);
@@ -393,6 +402,11 @@ public class Controller {
         return "Please register all 8 teams in order to start the tournament";
     }
 
+    /**
+     * Description: Assigns referees to matches in a specified group.
+     * @param String group, the group identifier to which referees are assigned. Must not be null or empty.
+     * @return String, returns a detailed message listing assigned referees for each match in the group.
+     */
     public String assignRefereesToGroup(String group) {
         String message = "Assignment of referees for the group " + group + ": ";
     
@@ -418,35 +432,12 @@ public class Controller {
         return message;
     }
 
-    public String registerGoalAndAssist(String scorerName, String assistName) { //int matchID
-        return groupStage.registerGoalAndAssist(scorerName, assistName); //matchID
-    }
-
-    public String registerGoal(String scoringTeamName, String scorerName, String assistName) {
-        Team team = searchTeam(scoringTeamName);
-
-        if (team == null) {
-            return "The team " + scoringTeamName + " was not found.";
-        }
-
-        Player scorer = team.getPlayerByName(scorerName);
-        Player assist = team.getPlayerByName(assistName);
-
-        if (scorer == null) {
-            return "The player " + scorerName + " was not found in the team " + scoringTeamName + ".";
-        }
-
-        if (assist == null) {
-            return "The player " + assistName + " was not found in the team " + scoringTeamName + ".";
-        }
-
-        scorer.incrementGoals();
-        assist.incrementAssists();
-        return "Goal registered: " + scorerName + " scored with an assist from " + assistName + ".";
-
-
-    }
-
+    /**
+     * Description: Selects referees from available referees to assign to a match.
+     * @param Referee[] referees, list of referees to assign. Array must contain at least one central and two assistant referees.
+     * @param String group, group identifier to help filter referees. Must not be null.
+     * @return String[], returns an array with assigned referee names and roles, or null if not enough referees.
+     */
     public String[] assignReferees(Referee[] referees, String group) {
     // Separate central and assistant referees
     List<Referee> centralReferees = new ArrayList<>();
@@ -488,7 +479,10 @@ public class Controller {
     
     
 
-    // Shuffle referees method using Random
+    /**
+     * Description: Shuffles the array of referees to randomize their order.
+     * @param Referee[] referees, list of referees to shuffle. Array must not be null.
+     */
     private void shuffleReferees(Referee[] referees) {
         Random rand = new Random();
         for (int i = referees.length - 1; i > 0; i--) {
@@ -499,6 +493,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Description: Registers match scores by delegating to the GroupStage class.
+     * @return String, returns the result from the registerMatchScores method in GroupStage.
+     */
     public String registerMatchScores() {
     return groupStage.registerMatchScores();  // Delegate to GroupStage to handle match score registration
 }
@@ -506,3 +504,4 @@ public class Controller {
 
 
 }
+

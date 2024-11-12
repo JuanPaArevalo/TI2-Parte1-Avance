@@ -8,8 +8,6 @@ public class Match {
     private Referee centralReferee;
     private Referee assistantReferee1;
     private Referee assistantReferee2;
-    private Goal[] goals;
-    private int goalCount;
 
     // Constructor to initialize teams for the match
     public Match(Team homeTeam, Team awayTeam) {
@@ -20,23 +18,6 @@ public class Match {
         this.centralReferee = null;
         this.assistantReferee1 = null;
         this.assistantReferee2 = null;
-        this.goals = new Goal[20];
-        this.goalCount = 0;
-    }
-
-    public String registerGoalAndAssist(String scorerName, String assistName) {
-        if (goalCount >= goals.length) {
-            return "Cannot register more goals in this match.";
-        }
-
-        Player scorer = homeTeam.getPlayerByName(scorerName) != null ? homeTeam.getPlayerByName(scorerName) : awayTeam.getPlayerByName(scorerName); //getPlayerByName
-        if (scorer == null) {
-            return "Scorer not found in either team.";
-        }
-
-        Player assist = assistName != null ? (homeTeam.getPlayerByName(assistName) != null ? homeTeam.getPlayerByName(assistName) : awayTeam.getPlayerByName(assistName)) : null;
-        goals[goalCount++] = new Goal(scorer, assist);
-        return "Goal and assist registered successfully.";
     }
 
     // Getters and Setters for the match details

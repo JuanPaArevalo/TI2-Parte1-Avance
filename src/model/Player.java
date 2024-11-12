@@ -3,24 +3,23 @@ package model;
 public class Player extends Person implements IWaterDrinker {
     private int playerNumber;
     private PlayerPosition position;
+    private int goalsScored;
+    private int assists;
     private int yellowCards;
     private int redCards;
     private int matchesPlayed;
-    private int goals;
-    private int assists;
 
     public Player(int playerNumber, String name, String country, PlayerPosition position) {
         super(name, country);
         this.playerNumber = playerNumber;
         this.position = position;
-        this.goals = 0;    // Inicializamos en 0
-        this.assists = 0;  // Inicializamos en 0
     }
 
-    public Player(int playerNumber, String name, String country, PlayerPosition position, int yellowCards, int redCards, int matchesPlayed) {
+    public Player(int playerNumber, String name, String country, PlayerPosition position, int goalsScored, int yellowCards, int redCards, int matchesPlayed) {
         super(name, country);
         this.playerNumber = playerNumber;
         this.position = position;
+        this.goalsScored = goalsScored;
         this.yellowCards = yellowCards;
         this.redCards = redCards;
         this.matchesPlayed = matchesPlayed;
@@ -41,14 +40,6 @@ public class Player extends Person implements IWaterDrinker {
 
     public void setPosition(PlayerPosition position) {
         this.position = position;
-    }
-
-    public void incrementGoals() {
-        this.goals++;
-    }
-
-    public void incrementAssists() {
-        this.assists++;
     }
 
     //Método implementado de la interface

@@ -65,7 +65,7 @@ public class GroupStage {
                 // Create match instance with teams and assign referees
                 Match match = new Match(groupB[i], groupB[j]);
                 matches[matchIndex] = match;
-                dates[matchIndex] = "Date for match " + (matchIndex + 1);
+                dates[matchIndex] = "match " + (matchIndex + 1); //"Date for match "
                 result += match.getHomeTeam().getName() + " vs " + match.getAwayTeam().getName() +
                         " on " + dates[matchIndex] + "\n";
                 matchIndex++;
@@ -127,13 +127,4 @@ public class GroupStage {
 
         return result.toString();
     }
-
-    /*
-    public String registerGoalAndAssist(int matchID, String scorerName, String assistName) {
-        if (matchID < 0 || matchID >= matches.length || matches[matchID] == null) {
-            return "invalid match ID.";
-        }
-        return matches[matchID].registerGoalAndAssist(scorerName, assistName);
-    }
-    */
 }

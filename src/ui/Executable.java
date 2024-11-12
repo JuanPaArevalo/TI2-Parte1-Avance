@@ -30,7 +30,8 @@ public class Executable {
                                 + "5. Show group stage draw \n"
                                 + "6. Assign referees to match \n" 
                                 + "7. Register match scores \n" 
-                                + "8. Exit \n");
+                                + "8. Register goal and assits \n"
+                                + "9. Exit \n");
 
             int option = reader.nextInt();
             reader.nextLine(); // Clear buffer
@@ -58,6 +59,9 @@ public class Executable {
                     System.out.println(cont.registerMatchScores());
                     break;
                 case 8:
+                    registerGoalAndAssist();
+                    break;
+                case 9:
                     flag = true;
                     System.exit(0);
                     break;
@@ -163,5 +167,23 @@ public class Executable {
         }
 
         System.out.println(cont.assignRefereesToGroup(group));
+    }
+
+    private void registerGoalAndAssist() {
+
+        /*
+        System.out.print("Enter match ID: ");
+        int matchID = reader.nextInt();
+        reader.nextLine();
+        */
+
+        System.out.print("Enter scoring player name: ");
+        String scorerName = reader.nextLine();
+
+        System.out.print("Enter assisting player name (or type 'NONE' if no assist): ");
+        String assistName = reader.nextLine();
+
+        String result = cont.registerGoalAndAssist(scorerName, assistName.equals("NONE") ? null : assistName); //matchID
+        System.out.println(result);
     }
 }

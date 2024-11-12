@@ -418,6 +418,35 @@ public class Controller {
         return message;
     }
 
+    public String registerGoalAndAssist(String scorerName, String assistName) { //int matchID
+        return groupStage.registerGoalAndAssist(scorerName, assistName); //matchID
+    }
+
+    public String registerGoal(String scoringTeamName, String scorerName, String assistName) {
+        Team team = searchTeam(scoringTeamName);
+
+        if (team == null) {
+            return "The team " + scoringTeamName + " was not found.";
+        }
+
+        Player scorer = team.getPlayerByName(scorerName);
+        Player assist = team.getPlayerByName(assistName);
+
+        if (scorer == null) {
+            return "The player " + scorerName + " was not found in the team " + scoringTeamName + ".";
+        }
+
+        if (assist == null) {
+            return "The player " + assistName + " was not found in the team " + scoringTeamName + ".";
+        }
+
+        scorer.incrementGoals();
+        assist.incrementAssists();
+        return "Goal registered: " + scorerName + " scored with an assist from " + assistName + ".";
+
+
+    }
+
     public String[] assignReferees(Referee[] referees, String group) {
     // Separate central and assistant referees
     List<Referee> centralReferees = new ArrayList<>();

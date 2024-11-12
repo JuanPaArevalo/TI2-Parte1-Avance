@@ -55,6 +55,15 @@ public class Team {
         return "Cannot add more players to the team.";
     }
 
+    public Player getPlayerByName(String name) {
+        for (int i = 0; i < playerCount; i++) {
+            if (players[i] != null && players[i].getName().equalsIgnoreCase(name)) {
+                return players[i];
+            }
+        }
+        return null; // player not found
+    }
+
     public Player[] getPlayers() {
         return players;
     }

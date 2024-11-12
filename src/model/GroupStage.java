@@ -127,4 +127,13 @@ public class GroupStage {
 
         return result.toString();
     }
+
+    /*
+    public String registerGoalAndAssist(int matchID, String scorerName, String assistName) {
+        if (matchID < 0 || matchID >= matches.length || matches[matchID] == null) {
+            return "invalid match ID.";
+        }
+        return matches[matchID].registerGoalAndAssist(scorerName, assistName);
+    }
+    */
 }
